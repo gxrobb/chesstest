@@ -1,5 +1,5 @@
 <template>
-  <div class="board">
+  <div :class="boardCSS">
     <div class="board__grid">
       <chess-square 
         v-for="square in board" 
@@ -12,8 +12,6 @@
       <div v-for="click in clickHistory" :key="click.count">
         {{ click.count + 1 }}: {{ click.xAxis }} - {{ click.yAxis }}
       </div>
-      <button>mobile</button>
-      <button>not mobile</button>
     </div>
   </div>
 </template>
@@ -23,6 +21,7 @@ import { defineComponent, ref } from 'vue';
 import { TILES } from '../constants/TilesJson';
 import { Tile } from '../interfaces/Tile';
 import ChessSquare from './ChessSquare.vue';
+import { isMobile } from 'mobile-device-detect';
 
 export default defineComponent({
   name: 'ChessBoard',
@@ -40,13 +39,18 @@ export default defineComponent({
 
     // methods
     const handleAddToClickedArray = (square: Tile) => {
-      clickHistory.value.push({ ...square, count: count.value++ });
+      clickHistory.value.push({ ...square, count: count.value++ as number });
     };
+
+    //computed
+    const boardCSS = isMobile ? 'board board--mobile' : 'board';
 
     return {
       board,
       count,
       clickHistory,
+      isMobile,
+      boardCSS,
       handleAddToClickedArray,
     }
   },
@@ -55,7 +59,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* // todo scale breakpoints */
+
 .board__grid {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -65,6 +69,7 @@ export default defineComponent({
   max-width:1000px;
   max-height:1000px
 }
+
 .board {
   max-width: 1400px;
   margin: 0 auto;
@@ -73,8 +78,16 @@ export default defineComponent({
   grid-template-columns: 9fr 1fr;
   grid-template-rows: 1fr;
 }
+.board--mobile {
+  grid-template-columns: 1fr;
+}
+
 .sidebar {
   width: 200px;
   padding: 20px;
+}
+
+.sidebar--mobile{
+  width: 100%;
 }
 </style>

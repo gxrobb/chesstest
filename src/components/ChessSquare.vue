@@ -28,7 +28,7 @@ export default defineComponent({
     const styles = computed(() => ({
       'square': true,
       [`square--${props.square.color}`]: true,
-      'square--selected': selected.value
+      'highlight': selected.value
     }));
     const handleSquareclick = () => {
       selected.value = true;
@@ -45,10 +45,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* 
-  -should highlight the square
-  -move sidebar below on shift;
-*/
 .square {
   aspect-ratio:  1/1;
   width:100%;
@@ -60,8 +56,11 @@ export default defineComponent({
 .square--black {
   background-color: #b58863;
 }
-.square--selected {
-  background-color: red;
+.square--white.highlight {
+  background-color: #fff6e7;
+}
+.square--black.highlight {
+  background-color: #d4a076;
 }
 
 </style>
