@@ -45,11 +45,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
+/* 
+  -should highlight the square
+  -move sidebar below on shift;
+*/
 .square {
+  aspect-ratio:  1/1;
   width:100%;
-  height: 100%;
-  max-width:150px;
-  min-height:100px;
   cursor: pointer;
 }
 .square--white {
@@ -57,13 +59,6 @@ export default defineComponent({
 }
 .square--black {
   background-color: #b58863;
-}
-.square:before {
-  content: "";
-  display: block;
-  height: 0;
-  width: 0;
-  padding-bottom: calc(9/16 * 100%);
 }
 .square--selected {
   background-color: red;

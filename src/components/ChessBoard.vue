@@ -1,12 +1,19 @@
 <template>
   <div class="board">
-    {{ moveHistory}}
     <div class="board__grid">
       <chess-square 
         v-for="square in board" 
         :key="square" :square="square" 
         @square-clicked="handleAddToClickedArray"
       />
+    </div>
+    <div class="sidebar">
+      <h2> Click History</h2>
+      <div v-for="click in clickHistory" :key="click.count">
+        {{ click.count + 1 }}: {{ click.xAxis }} - {{ click.yAxis }}
+      </div>
+      <button>mobile</button>
+      <button>not mobile</button>
     </div>
   </div>
 </template>
@@ -27,19 +34,19 @@ export default defineComponent({
   setup() {
 
     // data
-    const moveHistory = ref([]);
+    const clickHistory = ref([]);
     const board = ref([ ...TILES ]);
     const count = ref(0);
 
     // methods
     const handleAddToClickedArray = (square: Tile) => {
-      moveHistory.value.push({ ...square, count: count.value++ });
+      clickHistory.value.push({ ...square, count: count.value++ });
     };
 
     return {
       board,
       count,
-      moveHistory,
+      clickHistory,
       handleAddToClickedArray,
     }
   },
@@ -54,7 +61,20 @@ export default defineComponent({
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
   grid-gap: 0;
-  max-width:1200px;
+  width: 100%;
+  max-width:1000px;
+  max-height:1000px
+}
+.board {
+  max-width: 1400px;
   margin: 0 auto;
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: 9fr 1fr;
+  grid-template-rows: 1fr;
+}
+.sidebar {
+  width: 200px;
+  padding: 20px;
 }
 </style>
