@@ -33,13 +33,13 @@ export default defineComponent({
   setup() {
 
     // data
-    const clickHistory = ref([]);
-    const board = ref([ ...TILES ]);
-    const count = ref(0);
+    const clickHistory = ref<{ count: number }[]>([]);
+    const board = ref<Tile[]>([ ...TILES ]);
+    const count = ref<number>(0);
 
     // methods
     const handleAddToClickedArray = (square: Tile) => {
-      clickHistory.value.push({ ...square, count: count.value++ as number });
+      clickHistory.value.push({ ...square, count: count.value++ });
     };
 
     //computed
